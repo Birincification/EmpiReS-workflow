@@ -9,16 +9,12 @@
 			<!-- must exist -->
 			<const name="LOGDIR">${BASE}/log</const>
 
-			<const name="DOCKER_BIN">/usr/bin/podman</const>
+			<const name="GTF">GTFFILENAME</const>
+			<const name="FASTA">FASTAFILENAME</const>
+			<const name="INDEXDIR">INDEXDIRNAME</const>
+			<const name="NTHREAD">8</const>
 		</constants>
-		<wrappers>
-			<docker name="docker" path2docker="${DOCKER_BIN}" image="bash:4.4" disableAutodetectMount="true">
-				<blacklist pattern="/tmp/" />
-				<mount><host>${WATCHDOG}/</host></mount>
-				<mount><host>${BASE}/</host></mount>
-				<mount><host>${LOGDIR}/</host></mount>
-			</docker>
-		</wrappers>
+
 		<executors>
 			<sge name="cluster_low" default="true" maxRunning="8" slots="1" memory="80000M" />  <!--queue="dell.q"-->
 			<sge name="indexing" maxRunning="1" slots="1" memory="160000M" queue="dell256.q"/>
@@ -26,6 +22,7 @@
 			<!-- not working yet with this image (wrong shebang as no /bin/bash in image...) -->
 			<!-- <sge name="cluster_low_podman" default="true" maxRunning="8" slots="1" memory="2048M" queue="hpclient.q" container="docker" shebang="#!/usr/bin/env bash"/> -->	
 		</executors>
+
 		<processBlock>
 			<processInput name="input_block" />
 			<processTable name="table" table="${INPUT_TABLE}"/>
