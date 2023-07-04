@@ -3,13 +3,11 @@
 	<settings>
 		<constants>
 			<const name="WATCHDOG">/home/proj/software/watchdog</const>
-			<const name="BASE">/mnt/raidinput2/tmp/hadziahmetovic/EmpiReS-workflow</const>
+			<const name="BASE">BASEDIRNAME</const>
 			<const name="INPUT_TABLE">${BASE}/sample.table</const>
-			<const name="EMPIRES_TABLE">/mnt/raidtmp/hadziahmetovic/input/simulations.table</const>
-			<const name="OUT">${BASE}/OUT</const>
-			
+			<!--const name="EMPIRES_TABLE">/mnt/raidtmp/hadziahmetovic/input/simulations.table</const-->			
 			<!-- must exist -->
-			<const name="LOGDIR">${OUT}/log</const>
+			<const name="LOGDIR">${BASE}/log</const>
 
 			<const name="DOCKER_BIN">/usr/bin/podman</const>
 		</constants>
@@ -30,14 +28,14 @@
 		</executors>
 		<processBlock>
 			<processInput name="input_block" />
-			<processTable name="table" table="${EMPIRES_TABLE}"/>
+			<processTable name="table" table="${INPUT_TABLE}"/>
 		</processBlock>
 	</settings>
 	<!-- TODO: modify -->
 	<tasks mail="hadziahmetovic@cip.ifi.lmu.de">
 		<!-- simple test task -->
 		
-		<scriptCallerTask id="1" name="index" executor="emp"> <!--notify="enabled"-->
+		<!--scriptCallerTask id="1" name="index" executor="emp"> <notify="enabled">
 			<parameter>
 				<script>${BASE}/config/run_index.sh</script>
 				<config>${BASE}/config/index.config</config>
@@ -47,12 +45,12 @@
 				<stdout>${LOGDIR}/scriptCaller.out</stdout>
 				<stderr>${LOGDIR}/scriptCaller.err</stderr>
 			</streams>
-		</scriptCallerTask>
+		</scriptCallerTask-->
 
-		<scriptCallerTask id="2" name="empires" processBlock="table" executor="emp" notify="enabled">
-			<dependencies>
+		<scriptCallerTask id="1" name="empires" processBlock="table" executor="emp" notify="enabled">
+			<!--dependencies>
 				<depends separate="true">1</depends>
-			</dependencies>
+			</dependencies-->
 			<parameter>
 				<script>${BASE}/config/run_empires_ecc.sh</script>
 				<param>index:{$index}</param>
