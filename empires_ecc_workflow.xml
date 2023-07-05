@@ -46,7 +46,7 @@
 				<depends separate="true">1</depends>
 			</dependencies-->
 			<parameter>
-				<script>${BASE}/config/run_empires_ecc.sh</script>
+				<script>${BASE}/run_empires.sh</script>
 					<param>index:${INDEXDIR}</param>
 					<param>pdata:{$pdata}</param>
 					<param>samples:{$samples}</param>
