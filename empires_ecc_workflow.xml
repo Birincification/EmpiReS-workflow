@@ -16,11 +16,8 @@
 		</constants>
 
 		<executors>
-			<sge name="cluster_low" default="true" maxRunning="8" slots="1" memory="80000M" />  <!--queue="dell.q"-->
 			<sge name="indexing" maxRunning="1" slots="1" memory="160000M" queue="dell256.q"/>
 			<sge name="emp" maxRunning="8" slots="1" memory="72000M"/>
-			<!-- not working yet with this image (wrong shebang as no /bin/bash in image...) -->
-			<!-- <sge name="cluster_low_podman" default="true" maxRunning="8" slots="1" memory="2048M" queue="hpclient.q" container="docker" shebang="#!/usr/bin/env bash"/> -->	
 		</executors>
 
 		<processBlock>
@@ -50,14 +47,20 @@
 			</dependencies-->
 			<parameter>
 				<script>${BASE}/config/run_empires_ecc.sh</script>
-				<param>index:{$index}</param>
-				<param>pdata:{$pdata}</param>
-				<param>outdir:{$out}</param>
-				<param>sampledir:{$samples}</param>
+					<param>index:${INDEXDIR}</param>
+					<param>pdata:{$pdata}</param>
+					<param>samples:{$samples}</param>
+					<param>out:{$out}</param>
+					<param>nthread:${NTHREAD}</param>
+					<param>gtf:${GTF}</param>
+					<param>log:${LOGDIR}</param>
+					<param>ecc</param>
+					<param>strand:true</param>
+					<param>paired</param>
 			</parameter>
 			<streams>
-				<stdout>${LOGDIR}/empires.{$dir}.out</stdout>
-				<stderr>${LOGDIR}/empires.{$dir}.err</stderr>
+				<stdout>${LOGDIR}/empires_{$label}.out</stdout>
+				<stderr>${LOGDIR}/empires_{$label}.err</stderr>
 			</streams>
 		</scriptCallerTask>
 	</tasks>
